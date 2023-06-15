@@ -7,6 +7,7 @@ interface DayOfMonthProps extends DatepickerProps {
   renderProps: RenderProps;
   isInRange?: boolean | null;
   disabledDates?: Set<number>;
+  isDateDisabled?: (date: Date) => boolean;
   dateObj: DateObj;
   onMouseEnter?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
@@ -22,6 +23,7 @@ export const DayOfMonth: React.FC<DayOfMonthProps> = ({
   propsConfigs,
   isInRange,
   disabledDates,
+  isDateDisabled,
   renderProps,
   onMouseEnter,
 }) => {
@@ -33,7 +35,8 @@ export const DayOfMonth: React.FC<DayOfMonthProps> = ({
     selectedBtnProps,
     todayBtnProps,
   } = propsConfigs?.dayOfMonthBtnProps || {};
-  const disabled = !selectable || disabledDates?.has(date.getTime());
+  const disabled =
+    !selectable || disabledDates?.has(date.getTime()) || isDateDisabled?.(date);
   const styleBtnProps: DayOfMonthBtnStyleProps = useMemo(
     () => ({
       defaultBtnProps: {

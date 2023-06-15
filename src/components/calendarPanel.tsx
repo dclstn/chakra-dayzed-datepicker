@@ -18,6 +18,7 @@ export interface CalendarPanelProps extends DatepickerProps {
   dayzedHookProps: Omit<DayzedHookProps, 'children' | 'render'>;
   configs: CalendarConfigs;
   disabledDates?: Set<number>;
+  isDateDisabled?: (date: Date) => boolean;
   onMouseEnterHighlight?: (date: Date) => void;
   isInRange?: (date: Date) => boolean | null;
 }
@@ -27,6 +28,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   configs,
   propsConfigs,
   disabledDates,
+  isDateDisabled,
   onMouseEnterHighlight,
   isInRange,
 }) => {
@@ -128,6 +130,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
                       renderProps={renderProps}
                       isInRange={isInRange && isInRange(date)}
                       disabledDates={disabledDates}
+                      isDateDisabled={isDateDisabled}
                       onMouseEnter={() => {
                         if (onMouseEnterHighlight) onMouseEnterHighlight(date);
                       }}
